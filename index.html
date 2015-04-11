@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="http://cdn.peerjs.com/0.3/peer.js"></script>
+	</head>
+	<body>
+		<audio autoplay></audio>
+
+		<script>
+			function hasGetUserMedia() {
+				return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
+						navigator.mozGetUserMedia || navigator.msGetUserMedia);
+			}
+
+			if (!hasGetUserMedia()) {
+				alert('getUserMedia() is not supported in your browser');
+			}
+
+			var peer = new Peer({ key: 'gui749ntif1rlik9' });
+			peer.on('open', function(id) {
+				console.log('My peer ID is: ' + id);
+			});
+
+			var conn = peer.connect(prompt('What remote PeerId do you want to connect to?'));
+
+			conn.on('open', function() {
+				// Receive messages
+				conn.on('data', function(data) {
+					console.log('Received', data);
+				});
+
+				// Send messages
+				conn.send('Hello!');
+			});
+
+			peer.on('connection', function(conn) {
+				conn.on('data', function(data) {
+					console.log('Received', data);
+				});
+			});
+		</script>
+		
+	</body>
+</html>
