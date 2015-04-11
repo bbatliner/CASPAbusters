@@ -87,14 +87,21 @@
 
 	<script>
 
+		var name;
+		var hall;
+		var wing;
+		var start;
+		var end;
+		var request;
+
 		function confirmRequest(){
-			var name = document.getElementById('name').value;
-			var hall = document.getElementById('hall').value;
-			var wing = document.getElementById('wing').value;
+			name = document.getElementById('name').value;
+			hall = document.getElementById('hall').value;
+			wing = document.getElementById('wing').value;
 			//NOTE THAT THESE TIME VALUES WILL NOT RETURnAM AND PM - INSTEAD, WILL RETURN MILITARY CLOCK
-			var start = document.getElementById('start').value;
-			var end = document.getElementById('end').value
-			var request = document.getElementById('request').value;
+			start = document.getElementById('start').value;
+			end = document.getElementById('end').value
+			request = document.getElementById('request').value;
 
 			if(request==''){
 				request = 'None.';
@@ -131,11 +138,45 @@
 			document.getElementById('review').style.display = 'none';
 		}
 
-		function submitRequest(){
-			var formField = document.getElementById('formField');
-			formField.innerHTML = '';
-			formField.innerHTML += '<img src="logo/caspa1.png" id="tallLogo">';
-			formField.innerHTML += '<h1>Your request has been submitted... sleep well!</h1>'
+		function submitRequest() {
+			// convert dates plz
+			var today = new Date();
+			var startDate = new Date();
+			var endDate = new Date();
+			startDate.setHours(start.substring(0,2));
+			startDate.setMinutes(start.substring(3,5));
+			startDate.setSeconds(0);
+			if (today - startDate > 0) {
+				startDate.setDate(startDate.getDate() + 1);
+			}
+			endDate.setHours(end.substring(0,2));
+			endDate.setMinutes(end.substring(3,5));
+			endDate.setSeconds(0);
+			if (today - endDate > 0) {
+				endDate.setDate(endDate.getDate() + 1);
+			}
+			console.log(startDate);
+			console.log(endDate);
+			var postData = {
+				'earliestWakeTime': startDate,
+				'latestWakeTime': endDate,
+				'hall': hall,
+				'wing': wing,
+				'name': name,
+				'message': request
+			};
+			$.post('/request/new', postData)
+				.done(function() {
+					var formField = document.getElementById('formField');
+					formField.innerHTML = '';
+					formField.innerHTML += '<img src="logo/caspa1.png" id="tallLogo">';
+					formField.innerHTML += '<h1>Your request has been submitted... sleep well!</h1>';
+				})
+				.fail(function(error) {
+					console.log(error);
+					alert('error! see console');
+				});
+			
 		}
 
 	</script>
