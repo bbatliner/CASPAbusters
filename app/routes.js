@@ -47,6 +47,26 @@ module.exports = function(app) {
 		});
 	});
 
+	// GET ===========================
+
+	app.get('/request/all', function(req, res) {
+		Request.find({ }, function(error, requests) {
+			if (error) {
+				return res.status(500).send('Unable to retrieve requests.');
+			}
+			return res.status(200).json(requests);
+		});
+	});
+
+	app.get('/request/available', function(req, res) {
+		Request.$where('this.isInTimeRange').exec(function(error, requests) {
+			if (error) {
+				return res.status(500).send('Unable to retrieve available requests');
+			}
+			return res.status(200).json(requests);
+		});
+	});
+
 	// ===============================
 	// PAGE ROUTES ===================
 	// ===============================
