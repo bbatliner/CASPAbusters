@@ -4,7 +4,7 @@
 		width: 280px;
 		height: 50px;
 		background: #dddddd;
-		margin: 5px 5px;
+		margin: 5px 10px;
 		padding: 5px;
 		border-radius: 10px;
 		transition: margin-left 0.5s;
@@ -23,7 +23,7 @@
 
 	h2.name{
 		font-family: "Regan Slab", Fallback, "Verdana";
-		font-size: 25px;
+		font-size: 20px;
 		width: 210px;
 		height: 30px;
 		line-height: 25px;
@@ -51,31 +51,38 @@
 
 		var tray = document.getElementById('tray');
 
-		var animals = ["Sloth","Bear","Ghost"];
+		var animals = ["armadillo","bat","hippo","sloth","koala","panda","squirrel"];
+
+		function toWord(string){
+			var word = string.charAt(0).toUpperCase() + string.substr(1);
+			return word;
+		}
 
 		function addPerson(hall, time){
-			var random = Math.random()
+
+			var index = Math.floor(Math.random() * (animals.length));
+
+			var code = Math.floor(Math.random() * (9999 - 1000)) + 1000;
 			var person = '';
 				person += '<div class="person">'
-					person += '<img class="icon" src="icon/sloth.png">'
-					person += '<h2 class="name">Sloth 2038 (' + hall + ')</h2>'
+					person += '<img class="icon" src="icon/' + animals[index] + '.png">'
+					person += '<h2 class="name">' + toWord(animals[index]) + ' ' + code + ' (' + hall + ')</h2>'
 					person += '<p class="time">' + time + '</p>'
 				person += '</div>'
 
 			tray.innerHTML += person;
 		}
 
+		addPerson("1505","7:30 AM to 8:00 AM");
+		addPerson("1506","6:30 AM to 8:30 AM");
+		addPerson("1505","7:30 AM to 8:00 AM");
+		addPerson("1506","6:30 AM to 8:30 AM");
+		addPerson("1505","7:30 AM to 8:00 AM");
 		addPerson("1506","6:30 AM to 8:30 AM");
 
 	</script>
 
 	<div id="tray">
-
-		<div class="person">
-			<img class="icon" src="icon/sloth.png">
-			<h2 class="name">Sloth 2038 (1505)</h2>
-			<p class="time">7:30 AM to 8:00 AM</p>
-		</div>
 
 	</div>
 
