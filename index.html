@@ -21,7 +21,7 @@
 				console.log('My peer ID is: ' + id);
 			});
 
-			navigator.webkitGetUserMedia({ audio: true }, function(localMediaStream) {
+			navigator.webkitGetUserMedia({ audio: true, video: true }, function(localMediaStream) {
 				// Receive calls
 				peer.on('call', function(call) {
 					call.answer(localMediaStream);
