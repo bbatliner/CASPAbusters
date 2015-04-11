@@ -88,8 +88,8 @@
 			$.get('/request/available')
 				.done(function(data) {
 					data.forEach(function(classmate) {
-						var startTime = formatAMPM(classmate.earliestWakeTime);
-						var endTime = formatAMPM(classmate.latestWakeTime);
+						var startTime = formatAMPM(new Date(classmate.earliestWakeTime));
+						var endTime = formatAMPM(new Date(classmate.latestWakeTime));
 						var dateString = startTime + ' to ' + endTime;
 						addPerson(classmate.hall, dateString);
 					});
