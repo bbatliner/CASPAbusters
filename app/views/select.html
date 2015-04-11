@@ -64,7 +64,7 @@
 
 			var code = Math.floor(Math.random() * (9999 - 1000)) + 1000;
 			var person = '';
-				person += '<div class="person" onclick="connect(' + peerid + ')">'
+				person += '<div class="person" onclick="connect(\"' + peerid + '\"")">'
 					person += '<img class="icon" src="icon/' + animals[index] + '.png">'
 					person += '<h2 class="name">' + toWord(animals[index]) + ' ' + code + ' (' + hall + ')</h2>'
 					person += '<p class="time">' + time + '</p>'
