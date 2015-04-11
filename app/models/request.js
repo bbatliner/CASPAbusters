@@ -5,7 +5,7 @@ var timestamps  = require('mongoose-timestamp');
 // Schema =============================
 
 var requestSchema = mongoose.Schema({
-	// NEEDS TO HAVE THE PEERID OF THE BROWSER
+	peerId:                  String,
 	earliestWakeTime:        Date,
 	latestWakeTime:          Date,
 	hall:                    String,

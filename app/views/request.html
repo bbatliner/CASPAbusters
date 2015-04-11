@@ -155,28 +155,29 @@
 			if (today - endDate > 0) {
 				endDate.setDate(endDate.getDate() + 1);
 			}
-			console.log(startDate);
-			console.log(endDate);
-			var postData = {
-				'earliestWakeTime': startDate,
-				'latestWakeTime': endDate,
-				'hall': hall,
-				'wing': wing,
-				'name': name,
-				'message': request
-			};
-			$.post('/request/new', postData)
-				.done(function() {
-					var formField = document.getElementById('formField');
-					formField.innerHTML = '';
-					formField.innerHTML += '<img src="logo/caspa1.png" id="tallLogo">';
-					formField.innerHTML += '<h1>Your request has been submitted... sleep well!</h1>';
-				})
-				.fail(function(error) {
-					console.log(error);
-					alert('error! see console');
+			var peer = new Peer({ key: 'gui749ntif1rlik9' });
+			peer.on('open', function(id) {
+				var postData = {
+					'peerId': id,
+					'earliestWakeTime': startDate,
+					'latestWakeTime': endDate,
+					'hall': hall,
+					'wing': wing,
+					'name': name,
+					'message': request
+				};
+				$.post('/request/new', postData)
+					.done(function() {
+						var formField = document.getElementById('formField');
+						formField.innerHTML = '';
+						formField.innerHTML += '<img src="logo/caspa1.png" id="tallLogo">';
+						formField.innerHTML += '<h1>Your request has been submitted... sleep well!</h1>';
+					})
+					.fail(function(error) {
+						console.log(error);
+						alert('error! see console');
+					});
 				});
-			
 		}
 
 	</script>
