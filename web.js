@@ -10,7 +10,7 @@ var cookieParser   = require('cookie-parser');
 var compression    = require('compression');
 
 // Setup MongoDB
-require(global.configDir + '/mongoose.js');
+// require(global.configDir + '/mongoose.js');
 
 // Setup Express server
 var app = express();
