@@ -73,12 +73,39 @@
 			tray.innerHTML += person;
 		}
 
-		addPerson("1505","7:30 AM to 8:00 AM");
-		addPerson("1506","6:30 AM to 8:30 AM");
-		addPerson("1505","7:30 AM to 8:00 AM");
-		addPerson("1506","6:30 AM to 8:30 AM");
-		addPerson("1505","7:30 AM to 8:00 AM");
-		addPerson("1506","6:30 AM to 8:30 AM");
+		function formatAMPM(date) {
+			var hours = date.getHours();
+		 	var minutes = date.getMinutes();
+			var ampm = hours >= 12 ? 'pm' : 'am';
+			hours = hours % 12;
+			hours = hours ? hours : 12; // the hour '0' should be '12'
+			minutes = minutes < 10 ? '0'+minutes : minutes;
+			var strTime = hours + ':' + minutes + ' ' + ampm;
+			return strTime;
+		}
+
+		$(function() {
+			$.get('/request/available')
+				.done(function(data) {
+					data.forEach(function(classmate) {
+						var startTime = formatAMPM(classmate.earliestWakeTime);
+						var endTime = formatAMPM(classmate.latestWakeTime);
+						var dateString = startTime + ' to ' + endTime;
+						addPerson(classmate.hall, dateString);
+					});
+				})
+				.fail(function(error) {
+					console.log(error);
+					alert('Error! see console');
+				});
+		});
+
+		// addPerson("1505","7:30 AM to 8:00 AM");
+		// addPerson("1506","6:30 AM to 8:30 AM");
+		// addPerson("1505","7:30 AM to 8:00 AM");
+		// addPerson("1506","6:30 AM to 8:30 AM");
+		// addPerson("1505","7:30 AM to 8:00 AM");
+		// addPerson("1506","6:30 AM to 8:30 AM");
 
 	</script>
 
