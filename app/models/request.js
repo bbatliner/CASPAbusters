@@ -33,4 +33,4 @@ requestSchema.methods.isInTimeRange = function() {
 
 
 // Expose model to application
-module.exports = mongoose.model('Subscriber', requestSchema);
+module.exports = mongoose.model('Requests', requestSchema);
