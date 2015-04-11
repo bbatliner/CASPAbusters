@@ -1,3 +1,82 @@
-<h2>This is the select view</h2>
+<style>
 
-<button onclick='loadView("main")'>Go back</button>
+	div.person{
+		width: 280px;
+		height: 50px;
+		background: #dddddd;
+		margin: 5px 5px;
+		padding: 5px;
+		border-radius: 10px;
+		transition: margin-left 0.5s;
+	}
+
+		div.person:hover{
+			background: #78aded;
+			margin-left: 20px;
+		}
+
+		img.icon{
+			width: 50px;
+			height: 50px;
+			float: left;
+		}
+
+	h2.name{
+		font-family: "Regan Slab", Fallback, "Verdana";
+		font-size: 25px;
+		width: 210px;
+		height: 30px;
+		line-height: 25px;
+		margin: 0 10px;
+		float: left;
+		text-overflow: ellipsis;
+	}
+
+	p.time{
+		font-family: "Verdana";
+		font-size: 15px;
+		width: 210px;
+		height: 20px;
+		line-height: 20px;
+		margin: 0 10px;
+		float: left;
+		text-overflow: ellipsis;
+	}
+
+</style>
+
+<h1>Select a Classmate to Awaken</h1>
+
+	<script>
+
+		var tray = document.getElementById('tray');
+
+		var animals = ["Sloth","Bear","Ghost"];
+
+		function addPerson(hall, time){
+			var random = Math.random()
+			var person = '';
+				person += '<div class="person">'
+					person += '<img class="icon" src="icon/sloth.png">'
+					person += '<h2 class="name">Sloth 2038 (' + hall + ')</h2>'
+					person += '<p class="time">' + time + '</p>'
+				person += '</div>'
+
+			tray.innerHTML += person;
+		}
+
+		addPerson("1506","6:30 AM to 8:30 AM");
+
+	</script>
+
+	<div id="tray">
+
+		<div class="person">
+			<img class="icon" src="icon/sloth.png">
+			<h2 class="name">Sloth 2038 (1505)</h2>
+			<p class="time">7:30 AM to 8:00 AM</p>
+		</div>
+
+	</div>
+
+<button onclick='loadView("main")'>Go Back</button>

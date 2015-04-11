@@ -1,0 +1,67 @@
+@font-face {
+	font-family: 'Regan Slab';
+	src: url('regan/ReganSlab-Regular.otf') format('opentype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Regan Ultra';
+	src: url('regan/ReganSlab-Ultra.otf') format('opentype');
+	font-weight: bold;
+	font-style: normal;
+}
+
+h1{
+	color: black;
+	margin: 20px 0;
+	font-family: "Regan Ultra";
+	font-size: 30px;
+	text-align: center;
+	font-weight: bold;
+}
+
+input.entry{
+	width: 280px;
+	height: 25px;
+	line-height: 25px;
+	margin: 5px 0;
+	padding: 5px;
+	font-family: "Verdana", Fallback, Verdana;
+	font-size: 15px;
+	border: 1px solid black;
+	border-radius: 10px
+}
+
+	input.button{
+		width: 290px;
+		height: 45px;
+		line-height: 35px;
+		margin: 5px 0;
+		padding: 5px;
+		font-family: "Regan Slab";
+		font-size: 20px;
+		border: none;
+		border-radius: 10px;
+		background: #124889;
+		color: white;
+	}
+
+button{
+	width: 290px;
+	height: 45px;
+	line-height: 35px;
+	margin: 5px 0;
+	padding: 5px;
+	font-family: "Regan Slab";
+	font-size: 20px;
+	border: none;
+	border-radius: 10px;
+	background: #124889;
+	color: white;
+}
+
+	img#tallLogo{
+			width: 200px;
+			margin: 45px 45px 10px;
+		}
