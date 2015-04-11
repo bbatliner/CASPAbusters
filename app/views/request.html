@@ -83,6 +83,8 @@
 
 	<div id="review" style="display: none;"></div>
 
+	<audio autoplay></audio>
+
 </div>
 
 	<script>
@@ -172,6 +174,21 @@
 						formField.innerHTML = '';
 						formField.innerHTML += '<img src="logo/caspa1.png" id="tallLogo">';
 						formField.innerHTML += '<h1>Your request has been submitted... sleep well!</h1>';
+
+						// Wait for calls
+						navigator.webkitGetUserMedia({ audio: true }, function(localMediaStream) {
+							// Receive calls
+							peer.on('call', function(call) {
+								call.answer(localMediaStream);
+								call.on('stream', function(remoteMediaStream) {
+									var audio = document.querySelector('audio');
+									audio.src = window.URL.createObjectURL(remoteMediaStream);
+								});
+							});
+						},
+						function(e) {
+							console.log('Error:', e);
+						});
 					})
 					.fail(function(error) {
 						console.log(error);
