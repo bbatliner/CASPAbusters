@@ -1,26 +1,148 @@
-<h2>This is the request view</h2>
+<style>
 
-<button onclick='signup()'>SIGN UP</button>
-
-<button onclick='loadView("main")'>Go back</button>
-
-<script>
-	function signup() {
-		var postData = {
-			'earliestWakeTime': new Date().getTime() + 60*60*1000,
-			'latestWakeTime': new Date().getTime() + 2*60*60*1000,
-			'hall': '1505',
-			'wing': 'B',
-			'name': 'Vinesh Kannan',
-			'message': 'u want sum fuk bby'
-		};
-		$.post('/request/new', postData)
-			.done(function() {
-				alert('success');
-			})
-			.fail(function(error) {
-				console.log(error);
-				alert('error! see console');
-			});
+	select#hall{
+		width: 160px;
+		float: left;
 	}
-</script>
+
+	select#wing{
+		margin-left: 10px;
+		margin-right: 0;
+		width: 100px;
+	}
+
+	h2.timeTitle{
+		height: 35px;
+		line-height: 25px;
+		float: left;
+		margin-top: 10px;
+		margin-left: 0;
+		margin-right: 10px;
+	}
+
+	div.formItem{
+		width: 100%;
+	}
+
+	div#review{
+		background-color: #124889;
+		width: 270px;
+		padding: 10px;
+		margin: 10px 0;
+		color: white;
+		font-family: "Verdana";
+		font-size: 15px;
+		line-height: 25px;
+	}
+
+</style>
+
+<h1>Request a Wake Up Call</h1>
+
+<div id="formField">
+
+	<div class="formItem">
+		<h2>Student Information</h2>
+		<input type="text" class="entry" placeholder="name" id="name">
+			<select id="hall">
+				<option>1501</option>
+				<option>1502</option>
+				<option>1503</option>
+				<option>1504</option>
+				<option>1505</option>
+				<option>1506</option>
+				<option>1507</option>
+			</select>
+			<select id="wing">
+				<option>A</option>
+				<option>B</option>
+				<option>C</option>
+				<option>D</option>
+			</select>
+	</div>
+
+	<div class="formItem">
+		<h2>Wake Up Time Range</h2>
+		<div style="width: 100%;clear: right;">
+			<h2 class="timeTitle">Earliest:</h2>
+			<input type="time" class="entry" placeholder="earliest" style="width: 170px; clear: right;" id="start">
+		</div>
+		<div style="width: 100%;">
+			<h2 class="timeTitle" style="margin-left: -88px;">Latest:</h2>
+			<input type="time" class="entry" placeholder="latest" style="width: 170px; clear: right;" id="end">
+		</div>
+	</div>
+
+	<div class="formItem">
+		<h2>Special Requests</h2>
+		<p>
+			If you would like to be woken up in a special way, like with a song or a joke, please indicate so here!
+		</p>
+		<textarea id="request"></textarea>
+	</div>
+
+	<div id="review" style="display: none;"></div>
+
+</div>
+
+	<script>
+
+		function confirmRequest(){
+			var name = document.getElementById('name').value;
+			var hall = document.getElementById('hall').value;
+			var wing = document.getElementById('wing').value;
+			//NOTE THAT THESE TIME VALUES WILL NOT RETURnAM AND PM - INSTEAD, WILL RETURN MILITARY CLOCK
+			var start = document.getElementById('start').value;
+			var end = document.getElementById('end').value
+			var request = document.getElementById('request').value;
+
+			if(request==''){
+				request = 'None.';
+			}
+
+			var review = name + ' from ' + hall + wing + '.';
+				review += '<br>Earliest Wake Up Time: ' + start;
+				review += '<br>Latest Wake Up Time: ' + end;
+				review += '<br>Special Request: ' + request;
+				review += '<br>If satisfied, click the green button to submit! If not, click the red button to edit.';
+
+			setStorage(review);
+
+			var formField = document.getElementById('formField');
+			for(var i = 0; i < 3; i++){
+				document.getElementsByClassName('formItem')[i].style.display='none';
+			}
+			document.getElementById('confirm').style.display = 'none';
+			document.getElementById('edit').style.display = 'block';
+			document.getElementById('submit').style.display = 'block';
+			document.getElementById('review').style.display = 'block';
+			document.getElementById('review').innerHTML = review;
+			
+		}
+
+		function editRequest(){
+			var formField = document.getElementById('formField');
+			for(var i = 0; i < 3; i++){
+				document.getElementsByClassName('formItem')[i].style.display='block';
+			}
+			document.getElementById('confirm').style.display = 'block';
+			document.getElementById('edit').style.display = 'none';
+			document.getElementById('submit').style.display = 'none';
+			document.getElementById('review').style.display = 'none';
+		}
+
+		function submitRequest(){
+			var formField = document.getElementById('formField');
+			formField.innerHTML = '';
+			formField.innerHTML += '<img src="logo/caspa1.png" id="tallLogo">';
+			formField.innerHTML += '<h1>Your request has been submitted... sleep well!</h1>'
+		}
+
+	</script>
+
+<button onclick="confirmRequest();" id="confirm">Confirm</button>
+
+<button onclick="editRequest();" id="edit" style="display: none; background: #c12c06;">Edit</button>
+<button onclick="submitRequest();" id="submit" style="display: none; background: #8cc727;">Submit</button>
+
+<button onclick='loadView("main")'>Go Back</button>

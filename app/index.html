@@ -30,22 +30,58 @@
 			background: white;
 			position: relative;
 			z-index: 10;
+			overflow-x: hidden;
+			overflow-y: scroll;
 		}
+
+			#display::-webkit-scrollbar{
+				width: 7.5px !important;
+				background-color: rgba(0,0,0,0.15);
+			}
+
+			#display::-webkit-scrollbar-thumb{
+				background-color: rgba(200,200,200,0.05);
+			}
+
+			div#phoneButton{
+				width: 80px;
+				height: 80px;
+				background: url('images/phoneButton.png');
+				background-size: 80px;
+				margin: 670px auto;
+				border-radius: 50px;
+				z-index: 15;
+				position: relative;
+			}
 
 	</style>
 </head>
 
 <body>
-	<div id="phoneImage"></div>
-
-	<div id="display">
-
+	<div id="phoneImage">
+		<center><div id="phoneButton" onclick="loadView('main');"></div></center>
 	</div>
+
+	<div id="display"></div>
+
+	<textarea id="storage" style="display: none;"></textarea>
+
+	
 
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 
 	<script>
+
+		var storage = document.getElementById('storage');
+
+		function setStorage(data){
+			storage.value = data;
+		}
+
+		function getStorage(){
+			return storage.value;
+		}
 
 		function loadView(view){
 			$('#display').load('views/' + view + '.html');
