@@ -1,6 +1,8 @@
 // Define directory constants
 global.rootDir     = __dirname;
 global.serveDir    = __dirname + '/app';
+global.modelsDir   = __dirname + '/app/models';
+global.configDir   = __dirname + '/config';
 
 // Require dependencies
 var morgan         = require('morgan');
@@ -10,7 +12,7 @@ var cookieParser   = require('cookie-parser');
 var compression    = require('compression');
 
 // Setup MongoDB
-// require(global.configDir + '/mongoose.js');
+require(global.configDir + '/mongoose.js');
 
 // Setup Express server
 var app = express();
