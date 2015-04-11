@@ -65,6 +65,8 @@ module.exports = function(app) {
 			}
 			var availableRequests = [];
 			requests.forEach(function(request) {
+				console.log('FOREACH COUNTER');
+				console.log(request.isInTimeRange());
 				if (request.isInTimeRange()) {
 					availableRequests[availableRequests.length] = request;
 				}

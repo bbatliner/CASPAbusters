@@ -26,8 +26,7 @@ requestSchema.plugin(timestamps);
 // Methods ============================
 
 requestSchema.methods.isInTimeRange = function() {
-	// MongoDB stores `Date`s in Unix timestamp format,
-	// so this is the format we use to compare the dates
+	// Convert all the dates to Unix timestamps in milliseconds for easy comparison
 	var now = new Date().getTime();
 	return new Date(this.earliestWakeTime).getTime() < now && now < new Date(this.latestWakeTime).getTime();
 };
