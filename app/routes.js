@@ -59,10 +59,16 @@ module.exports = function(app) {
 	});
 
 	app.get('/request/available', function(req, res) {
-		Request.$where('this.isInTimeRange').exec(function(error, requests) {
+		Request.find({ }, function(error, requests) {
 			if (error) {
 				return res.status(500).send('Unable to retrieve available requests');
 			}
+			var availableRequests = [];
+			requests.forEach(function(request) {
+				if (request.isInTimeRange()) {
+					availableRequests[availableRequests.length] = request;
+				}
+			});
 			return res.status(200).json(requests);
 		});
 	});
