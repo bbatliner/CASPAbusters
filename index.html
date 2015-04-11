@@ -21,24 +21,49 @@
 				console.log('My peer ID is: ' + id);
 			});
 
-			var conn = peer.connect(prompt('What remote PeerId do you want to connect to?'));
-
-			conn.on('open', function() {
-				// Receive messages
-				conn.on('data', function(data) {
-					console.log('Received', data);
+			navigator.getUserMedia({ audio: true }, function(localMediaStream) {
+				// Receive calls
+				peer.on('call', function(call) {
+					call.answer(localMediaStream);
+					call.on('stream', function(remoteMediaStream) {
+						var audio = document.querySelector('audio');
+						audio.src = window.URL.createObjectURL(remoteMediaStream);
+					});
 				});
 
-				// Send messages
-				conn.send('Hello!');
+				// Place a call
+				var remoteId = prompt('What remote PeerId do you want to call (leave blank for none)?');
+				if (remoteId != '') {
+					var call = peer.call(remoteId, localMediaStream);
+					call.on('stream', function(remoteMediaStream) {
+						var audio = document.querySelector('audio');
+						audio.src = window.URL.createObjectURL(remoteMediaStream);
+					});
+				}
+			},
+			function(e) {
+				console.log('Error:', e);
 			});
 
-			peer.on('connection', function(conn) {
-				conn.on('data', function(data) {
-					console.log('Received', data);
-				});
-			});
+			// SIMPLE BROWSER-TO-BROWSER TEXT COMMUNICATION
+			// var conn = peer.connect(prompt('What remote PeerId do you want to connect to?'));
+
+			// conn.on('open', function() {
+			// 	// Receive messages
+			// 	conn.on('data', function(data) {
+			// 		console.log('Received', data);
+			// 	});
+
+			// 	// Send messages
+			// 	conn.send('Hello!');
+			// });
+
+			// peer.on('connection', function(conn) {
+			// 	conn.on('data', function(data) {
+			// 		console.log('Received', data);
+			// 	});
+			// });
 		</script>
-		
+
 	</body>
 </html>
