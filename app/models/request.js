@@ -10,7 +10,13 @@ var requestSchema = mongoose.Schema({
 	hall:                    String,
 	wing:                    String,
 	name:                    String,
-	message:                 String
+	message:                 String,
+	callStatus:              Object
+	/* callStatus: {
+		status: {standby/active/completed},
+		verify1Completed: {true/false},
+		verify2Completed: {true/false}
+	} */
 });
 
 requestSchema.plugin(timestamps);
