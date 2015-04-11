@@ -5,6 +5,7 @@ var timestamps  = require('mongoose-timestamp');
 // Schema =============================
 
 var requestSchema = mongoose.Schema({
+	// NEEDS TO HAVE THE PEERID OF THE BROWSER
 	earliestWakeTime:        Date,
 	latestWakeTime:          Date,
 	hall:                    String,
@@ -29,7 +30,6 @@ requestSchema.methods.isInTimeRange = function() {
 	// so this is the format we use to compare the dates
 	var now = new Date().getTime();
 	console.log('Now: ', now);
-	console.log('Earliest: ', earliestWakeTime);
 	console.log('Earliest2: ', this.earliestWakeTime);
 	return this.earliestWakeTime < now && now < this.latestWakeTime;
 };
