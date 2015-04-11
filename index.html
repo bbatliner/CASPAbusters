@@ -2,6 +2,8 @@
 <html>
 
 <head>
+	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+
 	<style>
 
 		html,body{
@@ -69,31 +71,13 @@
 
 	<script>
 
-		var display = document.getElementById('display');
-
-		function sampleClick(){
-			if(display.style.background!="124889"){
-				display.style.background="#124889";
-			}
-			else{
-				display.style.background="#FFFFFF";
-			}
+		function loadView(view) {
+			$('#display').load('views/' + view + '.html');
 		}
 
-		function insertPage(htmlString){
-			display.innerHTML = "";
-			display.innerHTML = htmlString;
-		}
-
-		function createPage(){
-			var r = ''
-				r += '<h1>Welcome!</h1>'
-				r += '<input type="text" placeholder="username">'
-				r += '<input type="text" placeholder="password">'
-			return r;
-		}
-
-		insertPage(createPage());
+		$(function() {
+			loadView('main');
+		});
 
 
 	</script>
