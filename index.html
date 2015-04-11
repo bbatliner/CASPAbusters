@@ -7,57 +7,65 @@
 		html,body{
 			margin: 0;
 			padding: 0;
-			background: url("graySand.png");
+			background: url('grayLines.png');
 		}
 
-		div.container{
-			margin: 15px auto;
-			padding: 30px 7.5px 50px;
-			width: 320px;
-			height: 569px;
-			background: black;
-			border-radius: 25px;
-			box-shadow: 0 0 20px rgba(0,0,0,0.75);
+			div#phoneImage{
+				margin: -110px auto;
+				width: 100%;
+				height: 780px;
+				background: url('phoneMock2.png');
+				background-size: 400px;
+				background-position: center;
+				background-repeat: no-repeat;
+				z-index: 5;
+				position: absolute;
+			}
+
+		div#display{
+			margin: 110px auto;
+			padding: 10px;
+			width: 290px;
+			height: 535px;
+			background: #124889;
+			position: relative;
+			z-index: 10;
 		}
-
-			div#phoneMic{
-				margin: -12.5px auto 12.5px;
-				height: 3px;
-				width: 25px;
-				background: white;
-				border-radius: 1.5px;
-			}
-
-			div#display{
-				margin: 0;
-				width: 320px;
-				height: 569px;
-				background: white;
-			}
-
-			div#phoneButton{
-				margin: 7.5px auto;
-				border: 3px solid white;
-				background: black;
-				width: 22.5px;
-				height: 22.5px;
-				border-radius: 17.5px;
-			}
-
-				div#phoneButton:hover{
-					opacity: 0.5;
-				}
 
 	</style>
 </head>
 
 <body>
 
-	<div class="container">
-		<div id="phoneMic"></div>
-		<div id="display"></div>
-		<div id="phoneButton" onclick="sampleClick();"></div>
+	<!--<img id="phoneImage" src="phoneMock2.png"/>-->
+	<div id="phoneImage"></div>
+
+	<div id="display">
+
 	</div>
+
+	<style>
+
+		h1{
+			color: white;
+			margin: 20px 0;
+			font-family: "Verdana";
+			font-size: 30px;
+			text-align: center;
+		}
+
+		input{
+			width: 280px;
+			height: 25px;
+			line-height: 25px;
+			margin: 20px 0;
+			padding: 5px;
+			font-family: "Verdana";
+			font-size: 15px;
+			border: none;
+		}
+
+	</style>
 
 	<script>
 
@@ -71,6 +79,21 @@
 				display.style.background="#FFFFFF";
 			}
 		}
+
+		function insertPage(htmlString){
+			display.innerHTML = "";
+			display.innerHTML = htmlString;
+		}
+
+		function createPage(){
+			var r = ''
+				r += '<h1>Welcome!</h1>'
+				r += '<input type="text" placeholder="username">'
+				r += '<input type="text" placeholder="password">'
+			return r;
+		}
+
+		insertPage(createPage());
 
 
 	</script>
