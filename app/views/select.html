@@ -58,13 +58,13 @@
 			return word;
 		}
 
-		function addPerson(hall, time){
+		function addPerson(hall, time, peerid){
 
 			var index = Math.floor(Math.random() * (animals.length));
 
 			var code = Math.floor(Math.random() * (9999 - 1000)) + 1000;
 			var person = '';
-				person += '<div class="person">'
+				person += '<div class="person" onclick="connect(' + peerid + ')">'
 					person += '<img class="icon" src="icon/' + animals[index] + '.png">'
 					person += '<h2 class="name">' + toWord(animals[index]) + ' ' + code + ' (' + hall + ')</h2>'
 					person += '<p class="time">' + time + '</p>'
@@ -84,6 +84,25 @@
 			return strTime;
 		}
 
+		function connect(peerid) {
+			var peer = new Peer({ key: 'gui749ntif1rlik9' });
+			
+			navigator.webkitGetUserMedia({ audio: true }, function(localMediaStream) {
+				// Place a call
+				var remoteId = peerid;
+				if (remoteId != '') {
+					var call = peer.call(remoteId, localMediaStream);
+					call.on('stream', function(remoteMediaStream) {
+						var audio = document.querySelector('audio');
+						audio.src = window.URL.createObjectURL(remoteMediaStream);
+					});
+				}
+			},
+			function(e) {
+				console.log('Error:', e);
+			});
+		}
+
 		$(function() {
 			$.get('/request/available')
 				.done(function(data) {
@@ -91,7 +110,7 @@
 						var startTime = formatAMPM(new Date(classmate.earliestWakeTime));
 						var endTime = formatAMPM(new Date(classmate.latestWakeTime));
 						var dateString = startTime + ' to ' + endTime;
-						addPerson(classmate.hall, dateString);
+						addPerson(classmate.hall, dateString, classmate.peerId);
 					});
 				})
 				.fail(function(error) {
@@ -100,17 +119,23 @@
 				});
 		});
 
+		$('.person').click(function() {
+			console.log($(this));
+		});
+
 		// addPerson("1505","7:30 AM to 8:00 AM");
 		// addPerson("1506","6:30 AM to 8:30 AM");
 		// addPerson("1505","7:30 AM to 8:00 AM");
 		// addPerson("1506","6:30 AM to 8:30 AM");
-		// addPerson("1505","7:30 AM to 8:00 AM");
-		// addPerson("1506","6:30 AM to 8:30 AM");
+		// addPerson("1505","7:30 AM to 8:00 AM", '123');
+		// addPerson("1506","6:30 AM to 8:30 AM", '456');
 
 	</script>
 
 	<div id="tray">
 
 	</div>
+
+	<audio autoplay></audio>
 
 <button onclick='loadView("main")'>Go Back</button>
