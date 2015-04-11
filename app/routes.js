@@ -14,9 +14,10 @@ module.exports = function(app) {
 		var wing = req.body.wing;
 		var name = req.body.name;
 		var message = req.body.message;
+		var peerId = req.body.peerId;
 
 		// Everything is required except for message
-		if (!earliestWakeTime || !latestWakeTime || !hall || !wing || !name) {
+		if (!earliestWakeTime || !latestWakeTime || !hall || !wing || !name || !peerId) {
 			return res.status(400).send('All inputs are required except for message.');
 		}
 
@@ -32,6 +33,7 @@ module.exports = function(app) {
 		}
 
 		var newRequest = new Request({
+			'peerId': peerId,
 			'earliestWakeTime': earliestWakeTime,
 			'latestWakeTime': latestWakeTime,
 			'hall': hall,
