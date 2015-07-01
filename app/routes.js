@@ -38,6 +38,8 @@ module.exports = function(app) {
 			return res.status(400).send('Earliest wake time must be before latest wake time.');
 		}
 
+		console.log(peerId);
+
 		var newRequest = new Request({
 			'peerId': peerId,
 			'earliestWakeTime': earliestWakeTime,
@@ -45,7 +47,10 @@ module.exports = function(app) {
 			'hall': hall,
 			'wing': wing,
 			'name': name,
-			'message': message
+			'message': message,
+			// One of these could be undefined - an undefined property does not get saved in MongoDB
+			'peerId': peerId,
+			'phoneNumber': phoneNumber
 		});
 		newRequest.save(function(err) {
 			if (err) {
