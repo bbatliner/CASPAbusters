@@ -14,11 +14,17 @@ module.exports = function(app) {
 		var wing = req.body.wing;
 		var name = req.body.name;
 		var message = req.body.message;
+		var phoneNumber = req.body.phoneNumber;
 		var peerId = req.body.peerId;
 
 		// Everything is required except for message
-		if (!earliestWakeTime || !latestWakeTime || !hall || !wing || !name || !peerId) {
+		if (!earliestWakeTime || !latestWakeTime || !hall || !wing || !name) {
 			return res.status(400).send('All inputs are required except for message.');
+		}
+
+		// Either a phone number or peer id is required
+		if (!(peerId || phoneNumber)) {
+			return res.status(400).send('A phone number or peer ID is required.');
 		}
 
 		// Earliest wake time and latest wake time must be in the future
@@ -29,7 +35,7 @@ module.exports = function(app) {
 
 		// Earliest wake time must be less than latest wake time
 		if (earliestWakeTime > latestWakeTime) {
-			return res.status(400).send('Earliest wake time must be less than latest wake time.');
+			return res.status(400).send('Earliest wake time must be before latest wake time.');
 		}
 
 		var newRequest = new Request({
