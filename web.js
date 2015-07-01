@@ -33,4 +33,9 @@ app.use(express.static(global.serveDir));
 require('./app/routes.js')(app);
 
 // Launch server
-app.listen(process.env.PORT || 5000);
+var server = app.listen(process.env.PORT || 5000, function() {
+	var host = server.address().address;
+	var port = server.address().port;
+
+	console.log('Server listening at http://' + host + ':' + port);
+});

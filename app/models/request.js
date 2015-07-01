@@ -6,6 +6,7 @@ var timestamps  = require('mongoose-timestamp');
 
 var requestSchema = mongoose.Schema({
 	peerId:                  String,
+	phoneNumber:             String, 
 	earliestWakeTime:        Date,
 	latestWakeTime:          Date,
 	hall:                    String,
