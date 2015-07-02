@@ -1,3 +1,5 @@
+'use strict';
+
 var Request = require(global.modelsDir + '/request.js');
 
 module.exports = function(app) {
@@ -7,6 +9,7 @@ module.exports = function(app) {
 	// ===============================	
 
 	// POST ==========================
+	
 	app.post('/request/new', function(req, res) {
 		var earliestWakeTime = req.body.earliestWakeTime;
 		var latestWakeTime = req.body.latestWakeTime;
@@ -38,10 +41,7 @@ module.exports = function(app) {
 			return res.status(400).send('Earliest wake time must be before latest wake time.');
 		}
 
-		console.log(peerId);
-
 		var newRequest = new Request({
-			'peerId': peerId,
 			'earliestWakeTime': earliestWakeTime,
 			'latestWakeTime': latestWakeTime,
 			'hall': hall,
@@ -55,6 +55,21 @@ module.exports = function(app) {
 		newRequest.save(function(err) {
 			if (err) {
 				return res.status(500).send('Unable to save request.');
+			}
+			return res.status(200).json({ id: newRequest._id });
+		});
+	});
+
+	app.post('/request/delete', function(req, res) { 
+		var id = req.body.id;
+
+		if (id === null || id === undefined) {
+			return res.status(400).send('id is required.');
+		}
+
+		Request.findByIdAndRemove(id, function(error) {
+			if (error) {
+				return res.status(500).send('Unable to delete request.');
 			}
 			return res.sendStatus(200);
 		});

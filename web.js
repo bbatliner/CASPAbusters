@@ -1,3 +1,5 @@
+'use strict';
+
 // Define directory constants
 global.rootDir     = __dirname;
 global.serveDir    = __dirname + '/app';
