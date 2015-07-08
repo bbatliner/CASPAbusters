@@ -22,14 +22,14 @@ var app = express();
 // Parsing
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-app.use(cookieParser());
+app.use(cookieParser()); // for parsing browser cookies
 
 // Logging
 app.use(morgan('dev'));
 
 // Serving
-app.use(compression());
-app.use(express.static(global.serveDir));
+app.use(compression()); // Use compression (gzip)
+app.use(express.static(global.serveDir)); // Serve static files, not rendered templates
 
 // Routes
 require('./app/routes.js')(app);

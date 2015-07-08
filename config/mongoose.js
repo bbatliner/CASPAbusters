@@ -7,7 +7,7 @@ mongoose.connect(process.env.MONGOLAB_URI, function(err) {
 });
 
 var db = mongoose.connection;
-db.once('open', function (data) {
+db.once('open', function() {
 	console.log("MongoDB connection successful.");
 });
 

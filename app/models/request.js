@@ -3,23 +3,22 @@
 var mongoose    = require('mongoose');
 var timestamps  = require('mongoose-timestamp');
 
-
 // Schema =============================
 
 var requestSchema = mongoose.Schema({
-	peerId:                  String,
-	phoneNumber:             String, 
+    peerId:                  String,
+	phoneNumber:             String,
 	earliestWakeTime:        Date,
 	latestWakeTime:          Date,
 	hall:                    String,
 	wing:                    String,
-	name:                    String,
+    name:                    String,
 	message:                 String,
-	callStatus:              Object
+	// TODO: Find a way to verify the structure of this object (perhaps with another model and ref?)
+	verificationStatus:              Object
 	/* callStatus: {
-		status: {standby/active/completed},
-		verify1Completed: {true/false},
-		verify2Completed: {true/false}
+		mathProblem: {true/false},
+		snowshow: {true/false}
 	} */
 });
 
