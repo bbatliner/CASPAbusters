@@ -1,7 +1,9 @@
 'use strict';
 
-var mongoose    = require('mongoose');
-var timestamps  = require('mongoose-timestamp');
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var timestamps = require('mongoose-timestamp');
+var VerificationStatus = require('./verificationStatus.js');
 
 // Schema =============================
 
@@ -14,12 +16,7 @@ var requestSchema = mongoose.Schema({
     wing:                    String,
     name:                    String,
     message:                 String,
-    // TODO: Find a way to verify the structure of this object (perhaps with another model and ref?)
-    verificationStatus:              Object
-    /* callStatus: {
-        mathProblem: {true/false},
-        snowshow: {true/false}
-    } */
+    verificationStatus:      { type: Schema.Types.ObjectId, ref: 'VerificationStatus' }
 });
 
 requestSchema.plugin(timestamps);
@@ -27,7 +24,7 @@ requestSchema.plugin(timestamps);
 
 // Methods ============================
 
-requestSchema.methods.isInTimeRange = function() {
+requestSchema.methods.isInTimeRange = function () {
     // Convert all the dates to Unix timestamps in milliseconds for easy comparison
     var now = new Date().getTime();
     return new Date(this.earliestWakeTime).getTime() < now && now < new Date(this.latestWakeTime).getTime();
@@ -35,4 +32,4 @@ requestSchema.methods.isInTimeRange = function() {
 
 
 // Expose model to application
-module.exports = mongoose.model('Requests', requestSchema);
+module.exports = mongoose.model('Request', requestSchema);
