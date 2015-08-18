@@ -1,9 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 var timestamps = require('mongoose-timestamp');
-var VerificationStatus = require('./verificationStatus.js');
 
 // Schema =============================
 
@@ -16,7 +14,10 @@ var requestSchema = mongoose.Schema({
     wing:                    String,
     name:                    String,
     message:                 String,
-    verificationStatus:      { type: Schema.Types.ObjectId, ref: 'VerificationStatus' }
+    verificationStatus:      {
+        mathProblem:    { type: Boolean, default: false },
+        snowshoe:       { type: Boolean, default: false }
+    }
 });
 
 requestSchema.plugin(timestamps);

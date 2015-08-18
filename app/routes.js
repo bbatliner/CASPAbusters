@@ -1,7 +1,6 @@
 'use strict';
 
 var Request = require(global.modelsDir + '/request.js');
-var VerificationStatus = require(global.modelsDir + '/verificationStatus.js');
 
 module.exports = function (app) {
 
@@ -42,30 +41,22 @@ module.exports = function (app) {
             return res.status(400).send('Earliest wake time must be before latest wake time.');
         }
 
-        var temp = new VerificationStatus();
-        temp.save(function (error, verificationStatus) {
-            if (error) {
-                return res.status(500).send('Unable to create new request.');
+        var newRequest = new Request({
+            'earliestWakeTime': earliestWakeTime,
+            'latestWakeTime': latestWakeTime,
+            'hall': hall,
+            'wing': wing,
+            'name': name,
+            'message': message,
+            // One of these could be undefined - an undefined property does not get saved in MongoDB
+            'peerId': peerId,
+            'phoneNumber': phoneNumber
+        });
+        newRequest.save(function (err) {
+            if (err) {
+                return res.status(500).send('Unable to save request.');
             }
-
-            var newRequest = new Request({
-                'earliestWakeTime': earliestWakeTime,
-                'latestWakeTime': latestWakeTime,
-                'hall': hall,
-                'wing': wing,
-                'name': name,
-                'message': message,
-                'verificationStatus': verificationStatus,
-                // One of these could be undefined - an undefined property does not get saved in MongoDB
-                'peerId': peerId,
-                'phoneNumber': phoneNumber
-            });
-            newRequest.save(function (err) {
-                if (err) {
-                    return res.status(500).send('Unable to save request.');
-                }
-                return res.status(200).json({id: newRequest._id});
-            });
+            return res.status(200).json({id: newRequest._id});
         });
     });
 
@@ -80,14 +71,13 @@ module.exports = function (app) {
             if (error) {
                 return res.status(404).send('Unable to find request with that id.');
             }
-            request.populate('verificationStatus', function (error, request) {
-                request.verificationStatus.mathProblem = true;
-                request.verificationStatus.save(function (error) {
-                    if (error) {
-                        return res.status(500).send('Unable to update request status.');
-                    }
-                    return res.sendStatus(200);
-                });
+
+            request.verificationStatus.mathProblem = true;
+            request.verificationStatus.save(function (error) {
+                if (error) {
+                    return res.status(500).send('Unable to update request status.');
+                }
+                return res.sendStatus(200);
             });
         });
     });
