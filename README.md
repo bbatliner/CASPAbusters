@@ -1,6 +1,6 @@
 CASPAbusters
 ==============
 
-Git repository for CASPAbusters, IMSAthon 2015.
+The Node.js project for CASPAbusters server and soon-to-be deprecated web interface.
 
-See Slack for more info.
+[Android app](https://github.com/bbatliner/CASPAbusters-android)
