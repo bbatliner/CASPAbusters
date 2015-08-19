@@ -6,6 +6,7 @@ var timestamps = require('mongoose-timestamp');
 // Schema =============================
 
 var requestSchema = mongoose.Schema({
+    deleted:                 { type: Boolean, default: false },
     peerId:                  String,
     phoneNumber:             String,
     earliestWakeTime:        Date,
@@ -14,7 +15,7 @@ var requestSchema = mongoose.Schema({
     wing:                    String,
     name:                    String,
     message:                 String,
-    verificationStatus:      {
+    verificationStatus: {
         mathProblem:    { type: Boolean, default: false },
         snowshoe:       { type: Boolean, default: false }
     }

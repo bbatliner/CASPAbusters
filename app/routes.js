@@ -67,13 +67,15 @@ module.exports = function (app) {
             return res.status(400).send('id is required.');
         }
 
-        Request.findById(id, function (error, request) {
+        Request.find({ _id: id, deleted: false }, function (error, request) {
             if (error) {
                 return res.status(404).send('Unable to find request with that id.');
             }
 
+            request.deleted = true;
             request.verificationStatus.mathProblem = true;
-            request.verificationStatus.save(function (error) {
+
+            request.save(function (error) {
                 if (error) {
                     return res.status(500).send('Unable to update request status.');
                 }
@@ -89,18 +91,25 @@ module.exports = function (app) {
             return res.status(400).send('id is required.');
         }
 
-        Request.findByIdAndRemove(id, function (error) {
+        Request.find({ _id: id, deleted: false }, function (error, request) {
             if (error) {
                 return res.status(500).send('Unable to delete request.');
             }
-            return res.sendStatus(200);
+
+            request.deleted = true;
+            request.save(function (error) {
+                if (error) {
+                    return res.status(500).send('Unable to delete request.');
+                }
+                return res.sendStatus(200);
+            });
         });
     });
 
     // GET ===========================
 
     app.get('/request/all', function (req, res) {
-        Request.find({}, function (error, requests) {
+        Request.find({ deleted: false }, function (error, requests) {
             if (error) {
                 return res.status(404).send('Unable to retrieve requests.');
             }
@@ -109,7 +118,7 @@ module.exports = function (app) {
     });
 
     app.get('/request/available', function (req, res) {
-        Request.find({}, function (error, requests) {
+        Request.find({ deleted: false }, function (error, requests) {
             if (error) {
                 return res.status(404).send('Unable to retrieve available requests');
             }
